@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="info_text">Копите кешбэк и обменивайте \n его на скидки до 100% на любые \n покупки у наших партнеров</string>
+    <string-array name="countries">
+        <item>All Countries</item>
+        <item>India</item>
+        <item>USA</item>
+        <item>Australia</item>
+        <item>UK</item>
+        <item>China</item>
+    </string-array>
+
+    <string name="mts_znaem_lichno">МТС Знаем лично — проект поддержки  малого предпринимательства. Хотим,  чтобы маленьких бизнесов было  больше и они чувствовали себя лучше.
+Партнеры проекта «МТС Знаем лично»  могут стать вашими любимыми  местами для ежедневных покупок и  отдыха.</string>
+</resources>

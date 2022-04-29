@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageViewBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxHeight="250dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/shutterstock_1097305460"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/logoCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_logo_category"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="88dp"
+
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/nameOfCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="В барбершоп \n за кешбэк"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:fontFamily="@font/mts_sans_medium"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/logoCategory"
+        android:layout_marginTop="97dp"
+        android:layout_marginStart="8dp"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tipOfDiscount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="скидка до"
+        android:textSize="14sp"
+        android:fontFamily="@font/mts_sans_regular"
+        android:textColor="#FAFAFA"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nameOfCategory"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/discountPercent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tipOfDiscount"
+        android:text="100%"
+        android:textColor="#FAFAFA"
+        android:fontFamily="@font/mts_sans_bold"
+        android:layout_marginStart="20dp"
+        android:textSize="32sp"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

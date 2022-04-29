@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_discount_info"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="34dp"
+        android:fontFamily="@font/mts_sans_regular"
+        android:text="@string/info_text"
+        android:textColor="#1D2023"
+        android:textSize="17sp"
+        tools:text="@string/info_text" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewHowGetDiscount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableEnd="@drawable/ic_box"
+        android:fontFamily="@font/mts_sans_medium"
+        android:paddingStart="20dp"
+        android:paddingEnd="24dp"
+        android:paddingRight="24dp"
+        android:text="Как получить скидку"
+        android:textColor="#1D2023"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewInfo"
+        tools:text="Как получить скидку" />
+
+
+    <LinearLayout
+        android:id="@+id/hidden"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="34dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fixed_layout"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/imageViewNumber1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="40dp"
+                android:text="1"
+                android:textSize="14dp"
+                android:fontFamily="@font/mts_sans_bold"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:background="@drawable/number_circle_background"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textViewNumber1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:fontFamily="@font/mts_sans_regular"
+                android:text="Выберите партнёра на карте"
+                android:textColor="#000000"
+                android:textSize="17sp"
+                app:layout_constraintStart_toEndOf="@id/imageViewNumber1"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Выберите партнёра на карте" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="26dp"
+            >
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/imageViewNumber2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="40dp"
+                android:text="2"
+                android:textSize="14dp"
+                android:fontFamily="@font/mts_sans_bold"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:background="@drawable/number_circle_background"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textViewNumber2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:fontFamily="@font/mts_sans_regular"
+                android:text="Закажите промокод"
+                android:textColor="#000000"
+                android:textSize="17sp"
+                app:layout_constraintStart_toEndOf="@id/imageViewNumber2"
+                app:layout_constraintTop_toBottomOf="@id/textViewNumber1"
+                tools:text="Закажите промокод" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="26dp"
+            >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/imageViewNumber3"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="40dp"
+                android:text="3"
+                android:textSize="14dp"
+                android:fontFamily="@font/mts_sans_bold"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:background="@drawable/number_circle_background"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textViewNumber3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+
+                android:fontFamily="@font/mts_sans_regular"
+                android:text="Покажите его на кассе"
+                android:textColor="#000000"
+                android:textSize="17sp"
+                app:layout_constraintStart_toEndOf="@id/imageViewNumber2"
+                app:layout_constraintTop_toBottomOf="@id/textViewNumber2"
+                tools:text="Покажите его на кассе" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fixed_layout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:orientation="vertical"
+        >
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewProject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_box"
+            android:fontFamily="@font/mts_sans_medium"
+            android:paddingStart="20dp"
+            android:paddingEnd="24dp"
+            android:paddingRight="24dp"
+            android:text="О проекте"
+            android:textColor="#1D2023"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewInfo"
+            tools:text="О проекте" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/hidden2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fixed_layout2">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewMTS"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="20dp"
+            android:fontFamily="@font/mts_sans_regular"
+            android:gravity="top"
+            android:text="@string/mts_znaem_lichno"
+            android:textColor="#1D2023"
+            android:textSize="17sp"
+            android:layout_marginBottom="40dp"
+            tools:text="@string/mts_znaem_lichno" />
+
+    </LinearLayout>
+
+</LinearLayout>
