@@ -9,16 +9,12 @@ import com.example.myapplication.databinding.LayoutDiscountInfoBinding
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var activityMainBinding: ActivityMainBinding
-    lateinit var layoutDiscountBannerBinding: LayoutDiscountBannerBinding
-    lateinit var layoutDiscountInfoBinding: LayoutDiscountInfoBinding
+    private val activityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private val layoutDiscountBannerBinding by lazy { LayoutDiscountBannerBinding.inflate(layoutInflater) }
+    private val layoutDiscountInfoBinding by lazy { LayoutDiscountInfoBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
-        layoutDiscountBannerBinding = LayoutDiscountBannerBinding.inflate(layoutInflater)
-        layoutDiscountInfoBinding = LayoutDiscountInfoBinding.inflate(layoutInflater)
-
         setContentView(activityMainBinding.root)
 
 //        layoutDiscountInfoBinding.textViewHowGetDiscount.setOnClickListener {
