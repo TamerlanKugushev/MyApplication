@@ -7,10 +7,9 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageViewBackground"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxHeight="250dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/shutterstock_1097305460"
+        android:layout_height="@dimen/banner_height"
+        android:scaleType="matrix"
+        android:src="@drawable/img"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"

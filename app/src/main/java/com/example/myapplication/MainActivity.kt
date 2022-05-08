@@ -1,65 +1,87 @@
 package com.example.myapplication
 
+import android.graphics.Matrix
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import com.example.myapplication.databinding.ActivityMainBinding
-import com.example.myapplication.databinding.LayoutDiscountBannerBinding
-import com.example.myapplication.databinding.LayoutDiscountInfoBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private val activityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private val layoutDiscountBannerBinding by lazy { LayoutDiscountBannerBinding.inflate(layoutInflater) }
-    private val layoutDiscountInfoBinding by lazy { LayoutDiscountInfoBinding.inflate(layoutInflater) }
+    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+
+    var isHidden1 = true
+    var isHidden2 = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(activityMainBinding.root)
+        setContentView(binding.root)
 
-//        layoutDiscountInfoBinding.textViewHowGetDiscount.setOnClickListener {
-//            if (layoutDiscountInfoBinding.hidden.visibility == View.VISIBLE) {
-//                //TransitionManager.beginDelayedTransition(parentLayout, AutoTransition())
-//                layoutDiscountInfoBinding.hidden.visibility = View.GONE
-//                layoutDiscountInfoBinding.textViewHowGetDiscount.setCompoundDrawablesWithIntrinsicBounds(
-//                    null,
-//                    null,
-//                    resources.getDrawable(R.drawable.ic_box),
-//                    null
-//                )
-//            } else {
-//                //TransitionManager.beginDelayedTransition(parentLayout, AutoTransition())
-//                layoutDiscountInfoBinding.hidden.visibility = View.VISIBLE
-//                layoutDiscountInfoBinding.textViewHowGetDiscount.setCompoundDrawablesWithIntrinsicBounds(
-//                    null,
-//                    null,
-//                    resources.getDrawable(R.drawable.ic_box1),
-//                    null
-//                )
-//            }
-//        }
-//
-//        layoutDiscountInfoBinding.textViewProject.setOnClickListener {
-//            if (layoutDiscountInfoBinding.hidden2.visibility == View.VISIBLE) {
-//                //TransitionManager.beginDelayedTransition(parentLayout, AutoTransition())
-//                layoutDiscountInfoBinding.hidden2.visibility = View.GONE
-//                layoutDiscountInfoBinding.textViewProject.setCompoundDrawablesWithIntrinsicBounds(
-//                    null,
-//                    null,
-//                    resources.getDrawable(R.drawable.ic_box),
-//                    null
-//                )
-//            } else {
-//                //TransitionManager.beginDelayedTransition(parentLayout, AutoTransition())
-//                layoutDiscountInfoBinding.hidden2.visibility = View.VISIBLE
-//                layoutDiscountInfoBinding.textViewProject.setCompoundDrawablesWithIntrinsicBounds(
-//                    null,
-//                    null,
-//                    resources.getDrawable(R.drawable.ic_box1),
-//                    null
-//                )
-//            }
-//        }
+        with (binding.info) {
 
+            textViewHowGetDiscount.setOnClickListener {
+                if (isHidden1) {
+                    hidden.visibility = View.GONE
+                } else {
+                    hidden.visibility = View.VISIBLE
+                }
+                isHidden1 = !isHidden1
+                expandImage(textViewHowGetDiscount, isHidden1)
+            }
+
+            textViewProject.setOnClickListener {
+                if (isHidden2) {
+                    hidden2.visibility = View.GONE
+                } else {
+                    hidden2.visibility = View.VISIBLE
+                }
+                isHidden2 = !isHidden2
+                expandImage(textViewProject, isHidden2)
+            }
+        }
     }
+
+    override fun onStart() {
+        super.onStart()
+
+        cropEndBanner()
+    }
+
+    private fun expandImage(textView: TextView, isExpand: Boolean) {
+        textView.setCompoundDrawablesWithIntrinsicBounds(
+            null,
+            null,
+            ResourcesCompat.getDrawable(resources,
+                if (isExpand) R.drawable.ic_box else R.drawable.ic_box1,
+                theme),
+            null
+        )
+    }
+
+    private fun cropEndBanner() {
+        val baseMatrix = Matrix()
+
+        val drawable = ResourcesCompat.getDrawable(resources, R.drawable.img, theme)!!
+
+        val viewWidth: Float = resources.displayMetrics.widthPixels.toFloat()
+        val viewHeight: Float = resources.getDimension(R.dimen.banner_height)
+        val drawableWidth = drawable.intrinsicWidth
+        val drawableHeight = drawable.intrinsicHeight
+
+        val widthScale = viewWidth / drawableWidth
+        val heightScale = viewHeight / drawableHeight
+
+        val scale = widthScale.coerceAtLeast(heightScale)
+        baseMatrix.postScale(scale, scale)
+        baseMatrix.postTranslate(
+            (viewWidth - drawableWidth * scale),
+            (viewHeight - drawableHeight * scale)
+        )
+        binding.banner.imageViewBackground.imageMatrix = baseMatrix
+    }
+
+
 }
