@@ -1,8 +1,14 @@
 package com.example.myapplication
 
+import android.graphics.Color
 import android.graphics.Matrix
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Html
+import android.text.SpannableString
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.URLSpan
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -42,12 +48,33 @@ class MainActivity : AppCompatActivity() {
                 expandImage(textViewProject, isHidden2)
             }
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
 
         cropEndBanner()
+        setHtml()
+    }
+
+    private fun setHtml() {
+        val html = "<a href=\"https://stage-znaem.mts.ru/\">МТС Знаем лично</a> - проект поддержки малого предпринимательства. Хотим, чтобы маленьких бизнесов было больше и они чувствовали себя лучше."
+
+        binding.info.textViewMTS.movementMethod = LinkMovementMethod.getInstance()
+        binding.info.textViewMTS.text = Html.fromHtml(html)
+        binding.info.textViewMTS.removeLinksUnderline()
+    }
+
+    private fun TextView.removeLinksUnderline() {
+        val spannable = SpannableString(text)
+        for (u in spannable.getSpans(0, spannable.length, URLSpan::class.java)) {
+            spannable.setSpan(object : URLSpan(u.url) {
+                override fun updateDrawState(ds: TextPaint) {
+                    super.updateDrawState(ds)
+                    ds.isUnderlineText = false
+                    ds.color = Color.BLUE
+                }
+            },
+                spannable.getSpanStart(u),
+                spannable.getSpanEnd(u), 0)
+        }
+        text = spannable
     }
 
     private fun expandImage(textView: TextView, isExpand: Boolean) {
