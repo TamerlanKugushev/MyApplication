@@ -7,8 +7,16 @@
         <entry key="app/src/main/res/drawable/ic_box1.xml" value="0.1355" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_test.xml" value="0.23854166666666668" />
+        <entry key="app/src/main/res/layout/block.xml" value="0.2484375" />
+        <entry key="app/src/main/res/layout/block_content.xml" value="0.2484375" />
+        <entry key="app/src/main/res/layout/block_parent.xml" value="0.2484375" />
+        <entry key="app/src/main/res/layout/block_title.xml" value="0.2484375" />
         <entry key="app/src/main/res/layout/layout_discount_banner.xml" value="0.2036285400390625" />
         <entry key="app/src/main/res/layout/layout_discount_info.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/li.xml" value="0.2484375" />
+        <entry key="app/src/main/res/layout/ol.xml" value="0.2484375" />
+        <entry key="app/src/main/res/layout/paragraph.xml" value="0.2484375" />
+        <entry key="app/src/main/res/layout/text.xml" value="0.2484375" />
       </map>
     </option>
   </component>
