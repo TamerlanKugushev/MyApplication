@@ -26,4 +26,7 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.ActionBar" >
         <item name="android:homeAsUpIndicator">@color/black</item>
     </style>
+    <style name="AppTheme.Link" parent="@android:style/TextAppearance" >
+        <item name="android:textColor">@android:color/holo_blue_light</item>
+    </style>
 </resources>

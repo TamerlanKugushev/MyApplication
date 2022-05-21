@@ -15,18 +15,24 @@ data class Content(
     @SerializedName("text")
     var text: String? = null,
     @SerializedName("title")
-    var title: String? = null
+    var title: String? = null,
+    @SerializedName("isOpen")
+    var isOpen: Boolean? = null,
+    @SerializedName("url")
+    var url: String? = null
 )
 
 enum class ContentType {
-  @SerializedName("paragraph")
-  PARAGRAPH,
-  @SerializedName("text")
-  TEXT,
-  @SerializedName("block")
-  BLOCK,
-  @SerializedName("ol")
-  OL,
-  @SerializedName("li")
-  LI,
+    @SerializedName("paragraph")
+    PARAGRAPH,
+    @SerializedName("text")
+    TEXT,
+    @SerializedName("block")
+    BLOCK,
+    @SerializedName("ol")
+    OL,
+    @SerializedName("li")
+    LI,
+    @SerializedName("link")
+    LINK
 }

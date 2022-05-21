@@ -4,16 +4,22 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.Matrix
 import android.os.Bundle
-import android.text.Html
 import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.Spanned
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
-import android.text.style.URLSpan
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
+import android.text.style.UnderlineSpan
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.text.getSpans
 import androidx.core.view.children
 import com.example.example.Content
 import com.example.example.ContentType
@@ -21,75 +27,83 @@ import com.example.example.MainContent
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.google.gson.Gson
 
+
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-
-    var isHidden1 = true
-    var isHidden2 = true
-
     private val json = """
-        { 
-         "mainContent":[
-           {
-              "type":"paragraph",
-              "children":[
-                 {
-                    "text":"Копите кешбэк и обменивайте его на скидки до 100% на любые покупки у наших партнеров.",
-                    "type":"text"
-                 }
-              ]
-           },
-           {
-              "type":"block",
-              "title":"Как получить скидку",
-              "children":[
-                 {
-                    "type":"ol",
-                    "children":[
-                       {
-                          "type":"li",
-                          "children":[
-                             {
-                                "text":"Выберите партнера на карте",
-                                "type":"text"
-                             }
-                          ]
-                       },
-                       {
-                          "type":"li",
-                          "children":[
-                             {
-                                "text":"Закажите промокод",
-                                "type":"text"
-                             }
-                          ]
-                       },
-                       {
-                          "type":"li",
-                          "children":[
-                             {
-                                "text":"Покажите его на кассе",
-                                "type":"text"
-                             }
-                          ]
-                       }
-                    ]
-                 }
-              ]
-           },
-           {
-              "type":"block",
-              "title":"О проекте",
-              "children":[
-                 {
-                    "text":"<a href=\"https://stage-znaem.mts.ru/\">МТС Знаем лично</a> - проект поддержки малого предпринимательства. Хотим, чтобы маленьких бизнесов было больше и они чувствовали себя лучше.",
-                    "type":"text"
-                 }
-              ]
-           }
+{"mainContent":[
+  {
+    "type": "paragraph",
+    "isOpen": true,
+    "children": [
+      {
+        "text": "Копите кешбэк и обменивайте его на скидки до 100% на любые покупки у наших партнеров.\n",
+        "type": "text"
+      }
+    ]
+  },
+  {
+    "type": "block",
+    "title": "Как получить скидку",
+    "isOpen": true,
+    "children": [
+      {
+        "type": "ol",
+        "children": [
+          {
+            "type": "li",
+            "children": [
+              {
+                "text": "Выберите партнера на карте",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "type": "li",
+            "children": [
+              {
+                "text": "Закажите промокод",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "type": "li",
+            "children": [
+              {
+                "text": "Покажите его на кассе",
+                "type": "text"
+              }
+            ]
+          }
         ]
-       }
+      }
+    ]
+  },
+  {
+    "type": "block",
+    "title": "О проекте",
+    "isOpen": false,
+    "children": [
+      {
+        "url": "https://stage-znaem.mts.ru/",
+        "type": "link",
+        "children": [
+          {
+            "text": "МТС Знаем лично",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "text": " - проект поддержки малого предпринимательства. Хотим, чтобы маленьких бизнесов было больше и они чувствовали себя лучше. Партнеры проекта \"МТС Знаем лично\" могут стать вашими любимыми местами для ежедневных покупок и отдыха.",
+        "type": "text"
+      }
+    ]
+  }
+]}
     """.trimIndent()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,6 +112,7 @@ class MainActivity : AppCompatActivity() {
 
         cropEndBanner()
         renderMainContent()
+        assets
     }
 
     private fun renderMainContent() {
@@ -108,58 +123,111 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun render(container: ViewGroup, content: Content) {
+        val layoutInflater = LayoutInflater.from(this)
         var innerContainer = container
         when (content.type) {
             ContentType.PARAGRAPH -> {
-                val viewGroup = layoutInflater.inflate(R.layout.paragraph, container) as ViewGroup
+                val viewGroup =
+                    layoutInflater.inflate(R.layout.layout_paragraph, container) as ViewGroup
                 innerContainer = viewGroup.children.last() as ViewGroup
             }
 
             ContentType.TEXT -> {
-                val viewGroup = layoutInflater.inflate(R.layout.text, container) as ViewGroup
-                viewGroup.children.last().apply {
-                    this as TextView
+                if (container.children.lastOrNull() is TextView
+                    && container.children.last().tag == "text"
+                ) {
+                    val textView = container.children.last() as TextView
+                    val spans = (textView.text as SpannableString).getSpans<Any>(
+                        0,
+                        textView.text.length
+                    )
 
-                    movementMethod = LinkMovementMethod.getInstance()
-                    text = Html.fromHtml(content.text)
-                    removeLinksUnderline()
+                    val span = SpannableStringBuilder().append(textView.text.toString())
+                        .append(content.text)
+
+                    spans.onEach {
+                        span.setSpan(it, 0, textView.text.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+                    }
+
+                    textView.text = span
+                } else {
+                    val viewGroup =
+                        layoutInflater.inflate(R.layout.layout_text_html, container) as ViewGroup
+                    viewGroup.children.last().apply {
+                        this as TextView
+                        text = SpannableString(content.text)
+                    }
                 }
             }
 
+            ContentType.LINK -> {
+                val viewGroup =
+                    layoutInflater.inflate(R.layout.layout_text_html, container) as ViewGroup
+                viewGroup.children.last().apply {
+                    this as TextView
+                    val link = content.children?.firstOrNull()?.text
+                    val span = SpannableString(link)
+                    movementMethod = LinkMovementMethod.getInstance()
+                    span.setSpan(object : ClickableSpan() {
+                        override fun onClick(widget: View) {
+                            //intents.onNext(DiscountView.Intent.OpenUrl(content.url))
+                            Toast.makeText(widget.context, "CLICK", Toast.LENGTH_LONG).show()
+                        }
+                    }, 0, link?.length ?: 0, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+                    span.setSpan(
+                        ForegroundColorSpan(Color.BLUE),
+                        0, link?.length ?: 0, Spanned.SPAN_INCLUSIVE_INCLUSIVE
+                    )
+                    span.setSpan(
+                        object : UnderlineSpan() {
+                            override fun updateDrawState(tp: TextPaint) {
+                                tp.isUnderlineText = false
+                            }
+                        },
+                        0, link?.length ?: 0, Spanned.SPAN_INCLUSIVE_INCLUSIVE
+                    )
+
+                    text = span
+                }
+                return
+            }
+
             ContentType.BLOCK -> {
-                val viewGroup = layoutInflater.inflate(R.layout.block, container) as ViewGroup
+                val viewGroup =
+                    layoutInflater.inflate(R.layout.layout_block_title, container) as ViewGroup
 
                 val block = viewGroup.children.last() as ViewGroup
                 val blockTitle = block.children.first() as TextView
                 val blockContent = block.children.last() as ViewGroup
 
+                blockExpand(content.isOpen ?: true, blockTitle)
+
                 blockTitle.apply {
                     text = content.title
+
                     setOnClickListener { expandedView ->
+//                        analytics.log(
+//                            null,
+//                            DiscountEvent.ExpandedBlockClickEvent(
+//                                text.toString().toTranslit()
+//                            )
+//                        )
                         val isExpanded = expandedView.tag == "block_title_expanded"
-                        val postfix = if (isExpanded) "collapsed" else "expanded"
-                        val parent = expandedView.parent as ViewGroup
-                        parent.children.asIterable().onEach { child ->
-                            if (child.tag.toString().startsWith("block_title_")) {
-                                child.tag = "block_title_$postfix"
-                                expandImage(child as TextView, !isExpanded)
-                            } else {
-                                child.visibility =
-                                    if (isExpanded) View.GONE else View.VISIBLE
-                            }
-                        }
+                        blockExpand(!isExpanded, expandedView as TextView)
                     }
                 }
                 innerContainer = blockContent
             }
 
             ContentType.OL -> {
-                val viewGroup = layoutInflater.inflate(R.layout.ol, container) as ViewGroup
+                val viewGroup =
+                    layoutInflater.inflate(R.layout.layout_block_item_ol, container) as ViewGroup
                 innerContainer = viewGroup.children.last() as ViewGroup
             }
 
             ContentType.LI -> {
-                val viewGroup = layoutInflater.inflate(R.layout.li, container) as ViewGroup
+                val viewGroup =
+                    layoutInflater.inflate(R.layout.layout_block_item_li, container) as ViewGroup
                 val li = viewGroup.children.last() as ViewGroup
                 li.children.firstOrNull()?.let { liInner ->
                     liInner as TextView
@@ -175,22 +243,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun TextView.removeLinksUnderline() {
-        val spannable = SpannableString(text)
-        for (u in spannable.getSpans(0, spannable.length, URLSpan::class.java)) {
-            spannable.setSpan(
-                object : URLSpan(u.url) {
-                    override fun updateDrawState(ds: TextPaint) {
-                        super.updateDrawState(ds)
-                        ds.isUnderlineText = false
-                        ds.color = Color.BLUE
-                    }
-                },
-                spannable.getSpanStart(u),
-                spannable.getSpanEnd(u), 0
-            )
+    private fun blockExpand(isExpanded: Boolean, textView: TextView) {
+        val postfix = if (!isExpanded) "collapsed" else "expanded"
+        val parent = textView.parent as ViewGroup
+        parent.children.asIterable().onEach { child ->
+            if (child.tag.toString().startsWith("block_title_")) {
+                child.tag = "block_title_$postfix"
+                expandImage(child as TextView, isExpanded)
+            } else {
+                child.visibility =
+                    if (isExpanded) View.VISIBLE else View.GONE
+            }
         }
-        text = spannable
     }
 
     private fun expandImage(textView: TextView, isExpand: Boolean) {
