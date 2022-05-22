@@ -1,7 +1,7 @@
-package com.example.example
+package com.example.myapplication
 
+import com.example.myapplication.renderer.ContentType
 import com.google.gson.annotations.SerializedName
-
 
 data class MainContent(
     var mainContent: ArrayList<Content>?,
@@ -21,18 +21,3 @@ data class Content(
     @SerializedName("url")
     var url: String? = null
 )
-
-enum class ContentType {
-    @SerializedName("paragraph")
-    PARAGRAPH,
-    @SerializedName("text")
-    TEXT,
-    @SerializedName("block")
-    BLOCK,
-    @SerializedName("ol")
-    OL,
-    @SerializedName("li")
-    LI,
-    @SerializedName("link")
-    LINK
-}
