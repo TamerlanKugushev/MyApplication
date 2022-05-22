@@ -16,8 +16,8 @@ class TextContent(
     override val layoutId: Int
         get() = R.layout.layout_text_html
 
-    override fun inflate(parent: ViewGroup): ViewGroup {
-        return super.inflate(parent).apply {
+    override fun inflate(parent: ViewGroup, parentType: ContentType?): ViewGroup {
+        return super.inflate(parent, parentType).apply {
             children.lastOrNull()?.let { view ->
                 view as TextView
                 view.text = SpannableString(this@TextContent.text)

@@ -22,12 +22,12 @@ class ContentParser {
             typeOfT: Type?,
             context: JsonDeserializationContext?
         ): Content {
-            return json?.asJsonObject?.get("type")?.asString?.let { type ->
-                context?.deserialize<Content>(
-                    json,
-                    ContentType.valueOf(type.uppercase()).getContentClass()
-                )
-            } ?: throw JsonParseException("Failed parse Content")
+            val type = json?.asJsonObject?.get("type")?.asString ?: "text"
+
+            return context?.deserialize<Content>(
+                json,
+                ContentType.valueOf(type.uppercase()).getContentClass()
+            ) ?: throw JsonParseException("Failed parse Content ${json?.toString()}")
         }
     }
 

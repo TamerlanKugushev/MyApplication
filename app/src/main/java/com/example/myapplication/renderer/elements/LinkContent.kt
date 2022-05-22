@@ -14,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.children
 import com.example.myapplication.R
+import com.example.myapplication.renderer.ContentType
 import com.google.gson.annotations.SerializedName
 import org.w3c.dom.Text
 
@@ -25,8 +26,8 @@ class LinkContent(
     override val layoutId: Int
         get() = R.layout.layout_text_html
 
-    override fun inflate(parent: ViewGroup): ViewGroup {
-        return super.inflate(parent).apply {
+    override fun inflate(parent: ViewGroup, parentType: ContentType?): ViewGroup {
+        return super.inflate(parent, parentType).apply {
             children.lastOrNull()?.let { view ->
                 view as TextView
 

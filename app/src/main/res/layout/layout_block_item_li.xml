@@ -13,7 +13,6 @@
         android:layout_height="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:background="@drawable/number_circle_background"
         android:fontFamily="@font/mts_sans_bold"
         android:gravity="center"
         tools:text="1"

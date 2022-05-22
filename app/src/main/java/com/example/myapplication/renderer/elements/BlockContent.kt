@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.children
 import com.example.myapplication.R
+import com.example.myapplication.renderer.ContentType
 import com.google.gson.annotations.SerializedName
 
 class BlockContent(
@@ -25,8 +26,8 @@ class BlockContent(
     override val layoutId
         get() = R.layout.layout_block_title
 
-    override fun inflate(parent: ViewGroup): ViewGroup {
-        val block = super.inflate(parent)
+    override fun inflate(parent: ViewGroup, parentType: ContentType?): ViewGroup {
+        val block = super.inflate(parent, parentType)
 
         val titleView = block.children.first() as TextView
         val blockContent = block.children.last() as ViewGroup

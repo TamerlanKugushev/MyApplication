@@ -13,7 +13,7 @@ abstract class Content(
 
     abstract val layoutId: Int?
 
-    protected open fun inflate(parent: ViewGroup): ViewGroup {
+    protected open fun inflate(parent: ViewGroup, parentType: ContentType? = null): ViewGroup {
         return layoutId?.let {  layoutId ->
             LayoutInflater.from(parent.context).inflate(layoutId, parent, true) as ViewGroup
         } ?: parent
@@ -26,6 +26,6 @@ abstract class Content(
     }
 
     fun render(parent: ViewGroup, parentType: ContentType? = null) {
-        renderChildren(inflate(parent), children)
+        renderChildren(inflate(parent, parentType), children)
     }
 }

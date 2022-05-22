@@ -17,12 +17,17 @@ enum class ContentType {
     @SerializedName("ol")
     OL,
 
+    @SerializedName("ul")
+    UL,
+
     @SerializedName("li")
     LI,
 
     @SerializedName("link")
-    LINK;
+    LINK,
 
+    @SerializedName("doc")
+    DOC;
 
     fun getContentClass(): Class<out Content> {
         return when (this) {
@@ -30,8 +35,10 @@ enum class ContentType {
             TEXT -> TextContent::class.java
             BLOCK -> BlockContent::class.java
             OL -> OlContent::class.java
+            UL -> OlContent::class.java
             LI -> LiContent::class.java
             LINK -> LinkContent::class.java
+            DOC -> DocContent::class.java
         }
     }
 }
