@@ -10,6 +10,7 @@ import androidx.core.view.children
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.renderer.ContentParser
 import com.example.myapplication.renderer.ContentRenderer
+import com.example.myapplication.renderer.KindRenderer
 import java.io.BufferedReader
 
 
@@ -31,7 +32,10 @@ class MainActivity : AppCompatActivity() {
 
 
         val content = ContentParser().fromJson(json)
+
         ContentRenderer(binding.container).render(content)
+
+        val kinds = KindRenderer().collectKinds(content)
     }
 
 //    private fun render(container: ViewGroup, content: Content) {

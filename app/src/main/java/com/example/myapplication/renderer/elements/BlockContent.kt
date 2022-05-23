@@ -10,11 +10,11 @@ import com.example.myapplication.R
 import com.example.myapplication.renderer.ContentType
 import com.google.gson.annotations.SerializedName
 
-class BlockContent(
+open class BlockContent(
     @SerializedName("title")
-    private val title: String,
+    private val title: String = "",
     @SerializedName("isOpen")
-    private val isOpen: Boolean
+    private val isOpen: Boolean = true
 ) : ContainerContent() {
 
     companion object {

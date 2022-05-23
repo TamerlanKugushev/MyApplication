@@ -1,6 +1,7 @@
 package com.example.myapplication.renderer
 
 import com.example.myapplication.renderer.elements.Content
+import com.example.myapplication.renderer.elements.BlockWithKind
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
@@ -23,10 +24,17 @@ class ContentParser {
             context: JsonDeserializationContext?
         ): Content {
             val type = json?.asJsonObject?.get("type")?.asString ?: "text"
+            val kind = json?.asJsonObject?.get("kind")?.asString
+
+            var typeClass = if (type == "block" && kind != null) {
+                BlockWithKind::class.java
+            } else {
+                ContentType.valueOf(type.uppercase()).getContentClass()
+            }
 
             return context?.deserialize<Content>(
                 json,
-                ContentType.valueOf(type.uppercase()).getContentClass()
+                typeClass
             ) ?: throw JsonParseException("Failed parse Content ${json?.toString()}")
         }
     }
